@@ -2,14 +2,20 @@ import { connectDB } from "@/lib/db";
 import { Order } from "@/models/Order";
 import { NextResponse } from "next/server";
 
-export async function PATCH(req, { params }) {
+export const dynamic = "force-dynamic";
+
+export async function PATCH(req, context) {
   try {
     await connectDB();
 
-    const { id } = params;
+    const { id } = await context.params; // ✅ SAFE FIX
     const { status } = await req.json();
 
-    const order = await Order.findByIdAndUpdate(id, { status }, { new: true });
+    const order = await Order.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
 
     return NextResponse.json({
       success: true,
@@ -17,8 +23,8 @@ export async function PATCH(req, { params }) {
     });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: "Failed to update status" },
-      { status: 500 },
+      { success: false, error: error.message },
+      { status: 500 }
     );
   }
 }

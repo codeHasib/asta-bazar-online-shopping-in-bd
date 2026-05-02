@@ -1,6 +1,7 @@
 import { connectDB } from "@/lib/db";
 import { Review } from "@/models/Review";
 import { NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 
 // CREATE REVIEW (customer)
 export async function POST(req) {

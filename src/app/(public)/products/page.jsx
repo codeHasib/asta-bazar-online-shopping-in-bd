@@ -1,0 +1,82 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useCartStore } from "@/store/cartStore";
+
+export default function ProductsPage() {
+  const [products, setProducts] = useState([]);
+  const addToCart = useCartStore((state) => state.addToCart);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const res = await fetch("/api/products");
+      const data = await res.json();
+      console.log(data)
+      setProducts(data.products || []);
+    };
+
+    fetchProducts();
+  }, []);
+
+  return (
+    <div className="p-6 max-w-6xl mx-auto">
+      <h1 className="text-2xl font-bold mb-6">Products</h1>
+
+      <div className="grid md:grid-cols-3 gap-6">
+        {products.map((product) => (
+          <div
+            key={product._id}
+            className="border rounded-xl p-4 shadow-sm"
+          >
+            {/* IMAGE */}
+            <div className="relative w-full h-40 mb-3">
+              <Image
+                src={product.images?.[0] || "/placeholder.png"}
+                alt={product.title}
+                fill
+                className="object-cover rounded-lg"
+              />
+            </div>
+
+            {/* TITLE */}
+            <h2 className="font-semibold">{product.title}</h2>
+
+            {/* PRICE */}
+            <p className="text-green-600 font-bold">
+              ৳ {product.price}
+            </p>
+
+            {/* STOCK STATUS */}
+            <p
+              className={`text-sm mt-1 ${
+                product.inStock ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {product.inStock ? "In Stock" : "Out of Stock"}
+            </p>
+
+            {/* ADD TO CART */}
+            <button
+              disabled={!product.inStock}
+              onClick={() =>
+                addToCart(
+                  product,
+                  1,
+                  product.sizes?.[0] || "default"
+                )
+              }
+              className={`mt-3 w-full py-2 rounded-lg text-white ${
+                product.inStock
+                  ? "bg-black hover:bg-gray-800"
+                  : "bg-gray-400 cursor-not-allowed"
+              }`}
+            >
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

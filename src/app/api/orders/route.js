@@ -4,6 +4,8 @@ import { Order } from "@/models/Order";
 import { NextResponse } from "next/server";
 import { sendOrderEmail } from "@/lib/sendEmail";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req) {
   try {
     await connectDB();
@@ -24,7 +26,13 @@ export async function POST(req) {
       phone,
       email,
       location,
-      items,
+      items: items.map((item) => ({
+        productId: item._id || item.productId,
+        title: item.title,
+        price: item.price,
+        quantity: item.quantity,
+        size: item.size,
+      })),
       totalPrice,
     });
 
@@ -35,6 +43,8 @@ export async function POST(req) {
       order,
     });
   } catch (error) {
+    console.error("🔥 ORDER ERROR FULL:", error);
+
     return NextResponse.json(
       { success: false, error: "Order failed" },
       { status: 500 },

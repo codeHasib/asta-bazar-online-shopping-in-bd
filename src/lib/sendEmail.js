@@ -10,16 +10,15 @@ export const sendOrderEmail = async (order) => {
   });
 
   const itemsText = order.items
-    .map(
-      (item) =>
-        `${item.title} (Size: ${item.size}) x${item.quantity} - ৳${item.price}`
-    )
+    .map((item) => {
+      return `${item.title || "Unknown"} (Size: ${item.size || "-"} ) x${item.quantity || 1} - ৳${item.price || 0}`;
+    })
     .join("\n");
 
   await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to: process.env.ADMIN_EMAIL,
-    subject: "New Order Received - LevenVerse",
+    subject: "New Order Received - Asta-Bazar",
     text: `
 New Order Received
 

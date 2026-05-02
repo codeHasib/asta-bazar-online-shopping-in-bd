@@ -2,10 +2,10 @@ import { connectDB } from "@/lib/db";
 import { Category } from "@/models/Category";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
 // CREATE CATEGORY
 export async function POST(req) {
   try {
-
     await connectDB();
 
     const body = await req.json();
