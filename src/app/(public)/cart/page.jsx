@@ -1,34 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCartStore } from "@/store/cartStore";
 
 export default function CheckoutPage() {
   const { cart, getTotalPrice, clearCart } = useCartStore();
 
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
   const [form, setForm] = useState({
-    customerName: "",
+    name: "",
     phone: "",
-    location: "",
-    email: "",
+    address: "",
   });
 
   const handleOrder = async () => {
     const orderPayload = {
-      customerName: form.customerName,
+      customerName: form.name,
       phone: form.phone,
-      location: form.location,
-      email: form.email,
-
+      location: form.address,
       items: cart.map((item) => ({
         productId: item._id,
         title: item.title,
         price: item.price,
         size: item.size,
         quantity: item.quantity,
-        image: item.images?.[0],
       })),
-
       totalPrice: getTotalPrice(),
     };
 
@@ -43,10 +44,10 @@ export default function CheckoutPage() {
     if (data.success) {
       alert("Order placed successfully!");
       clearCart();
-    } else {
-      alert(data.error || "Order failed");
     }
   };
+
+  if (!hydrated) return null; // 🔥 IMPORTANT FIX
 
   return (
     <div className="p-6 max-w-xl mx-auto">
@@ -55,33 +56,19 @@ export default function CheckoutPage() {
       <input
         placeholder="Name"
         className="border p-2 w-full mb-2"
-        onChange={(e) =>
-          setForm({ ...form, customerName: e.target.value })
-        }
+        onChange={(e) => setForm({ ...form, name: e.target.value })}
       />
 
       <input
         placeholder="Phone"
         className="border p-2 w-full mb-2"
-        onChange={(e) =>
-          setForm({ ...form, phone: e.target.value })
-        }
+        onChange={(e) => setForm({ ...form, phone: e.target.value })}
       />
 
       <textarea
         placeholder="Address"
         className="border p-2 w-full mb-2"
-        onChange={(e) =>
-          setForm({ ...form, location: e.target.value })
-        }
-      />
-
-      <input
-        placeholder="Email (optional)"
-        className="border p-2 w-full mb-2"
-        onChange={(e) =>
-          setForm({ ...form, email: e.target.value })
-        }
+        onChange={(e) => setForm({ ...form, address: e.target.value })}
       />
 
       <div className="font-bold mb-4">
