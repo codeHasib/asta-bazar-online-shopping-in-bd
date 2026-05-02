@@ -19,7 +19,7 @@ export default function Categories() {
   const [error, setError] = useState("");
 
   const fetchCategories = async () => {
-    const res = await fetch("/api/categories");
+    const res = await fetch("/api/categories", {cache: "no-store"});
     const data = await res.json();
     setCategories(data.categories || []);
   };

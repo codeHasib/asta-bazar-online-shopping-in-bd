@@ -22,7 +22,7 @@ export default function Reviews() {
   const fetchReviews = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch("/api/reviews/all");
+      const res = await fetch("/api/reviews/all", {cache: "no-store"});
       const data = await res.json();
       setReviews(data.reviews || []);
     } catch (err) {
@@ -37,13 +37,13 @@ export default function Reviews() {
   }, []);
 
   const approve = async (id) => {
-    const res = await fetch(`/api/reviews/${id}`, { method: "PATCH" });
+    const res = await fetch(`/api/reviews/${id}`, {cache: "no-store"}, { method: "PATCH" });
     if (res.ok) fetchReviews();
   };
 
   const remove = async (id) => {
     if (!window.confirm("Permanently delete this customer feedback?")) return;
-    const res = await fetch(`/api/reviews/${id}`, { method: "DELETE" });
+    const res = await fetch(`/api/reviews/${id}`, {cache: "no-store"}, { method: "DELETE" });
     if (res.ok) fetchReviews();
   };
 

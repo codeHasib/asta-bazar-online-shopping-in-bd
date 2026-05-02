@@ -18,7 +18,7 @@ export default function Orders() {
   const [updatingId, setUpdatingId] = useState(null);
 
   const fetchOrders = async () => {
-    const res = await fetch("/api/orders");
+    const res = await fetch("/api/orders", { cache: "no-store" });
     const data = await res.json();
     setOrders(data.orders || []);
   };
@@ -29,11 +29,15 @@ export default function Orders() {
 
   const updateStatus = async (id, status) => {
     setUpdatingId(id);
-    await fetch(`/api/orders/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
+    await fetch(
+      `/api/orders/${id}`,
+      { cache: "no-store" },
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      },
+    );
     await fetchOrders();
     setUpdatingId(null);
   };
@@ -77,7 +81,9 @@ export default function Orders() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98 }}
               className={`bg-white border border-slate-200 rounded-[2rem] overflow-hidden shadow-sm transition-all ${
-                updatingId === order._id ? "opacity-50 grayscale" : "opacity-100"
+                updatingId === order._id
+                  ? "opacity-50 grayscale"
+                  : "opacity-100"
               }`}
             >
               {/* Order Header */}
@@ -89,7 +95,7 @@ export default function Orders() {
                     </h2>
                     <span
                       className={`px-3 py-1 rounded-full border text-[10px] font-bold uppercase tracking-widest ${getStatusStyles(
-                        order.status
+                        order.status,
                       )}`}
                     >
                       {order.status}
@@ -97,10 +103,12 @@ export default function Orders() {
                   </div>
                   <div className="flex flex-wrap items-center gap-4 mt-2 text-slate-500">
                     <span className="flex items-center gap-1.5 text-xs font-semibold">
-                      <Phone size={14} className="text-blue-600" /> {order.phone}
+                      <Phone size={14} className="text-blue-600" />{" "}
+                      {order.phone}
                     </span>
                     <span className="flex items-center gap-1.5 text-xs font-semibold">
-                      <MapPin size={14} className="text-blue-600" /> {order.location}
+                      <MapPin size={14} className="text-blue-600" />{" "}
+                      {order.location}
                     </span>
                   </div>
                 </div>
@@ -137,7 +145,9 @@ export default function Orders() {
                       </div>
                       <div className="text-right">
                         <p className="text-xs font-bold text-slate-400">QTY</p>
-                        <p className="text-sm font-bold text-black">×{item.quantity}</p>
+                        <p className="text-sm font-bold text-black">
+                          ×{item.quantity}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -145,14 +155,15 @@ export default function Orders() {
 
                 {/* Footer Actions */}
                 <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row justify-end items-center gap-3">
-                  {order.status !== "declined" && order.status !== "delivered" && (
-                    <button
-                      onClick={() => updateStatus(order._id, "declined")}
-                      className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-white text-slate-400 border border-slate-200 font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-red-50 hover:text-red-600 hover:border-red-100 transition-all"
-                    >
-                      <X size={16} /> Decline
-                    </button>
-                  )}
+                  {order.status !== "declined" &&
+                    order.status !== "delivered" && (
+                      <button
+                        onClick={() => updateStatus(order._id, "declined")}
+                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-white text-slate-400 border border-slate-200 font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-red-50 hover:text-red-600 hover:border-red-100 transition-all"
+                      >
+                        <X size={16} /> Decline
+                      </button>
+                    )}
 
                   {order.status === "pending" && (
                     <button
@@ -176,7 +187,7 @@ export default function Orders() {
             </motion.div>
           ))}
         </AnimatePresence>
-        
+
         {orders.length === 0 && (
           <div className="py-20 text-center bg-slate-50 rounded-[2.5rem] border border-dashed border-slate-200">
             <ShoppingBag className="mx-auto text-slate-300 mb-4" size={48} />
