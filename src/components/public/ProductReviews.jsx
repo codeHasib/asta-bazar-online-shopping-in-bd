@@ -1,141 +1,88 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function ProductReviews({ productId }) {
+export default function Reviews({ productId }) {
   const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(false);
-
   const [form, setForm] = useState({
     name: "",
     rating: 5,
     comment: "",
   });
 
-  // 🔹 Fetch approved reviews
-  const fetchReviews = async () => {
-    try {
-      const res = await fetch(`/api/reviews?productId=${productId}`);
-      const data = await res.json();
-      setReviews(data.reviews || []);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   useEffect(() => {
-    if (productId) fetchReviews();
+    fetch(`/api/reviews?productId=${productId}`)
+      .then((res) => res.json())
+      .then((data) => setReviews(data.reviews || []));
   }, [productId]);
 
-  // 🔹 Handle input
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
+  const submitReview = async () => {
+    const res = await fetch("/api/reviews", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        productId,
+        ...form,
+      }),
     });
-  };
 
-  // 🔹 Submit review
-  const handleSubmit = async () => {
-    if (!form.name || !form.rating) {
-      alert("Name and rating required");
-      return;
+    const data = await res.json();
+
+    if (data.success) {
+      alert("Review submitted for approval");
+      setForm({ name: "", rating: 5, comment: "" });
     }
-
-    try {
-      setLoading(true);
-
-      const res = await fetch("/api/reviews", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          productId,
-          ...form,
-          rating: Number(form.rating),
-        }),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        alert("Review submitted for approval ✅");
-
-        setForm({
-          name: "",
-          rating: 5,
-          comment: "",
-        });
-      } else {
-        alert("Failed ❌");
-      }
-    } catch (err) {
-      console.error(err);
-    }
-
-    setLoading(false);
   };
 
   return (
     <div className="mt-10">
-      {/* ================= REVIEWS LIST ================= */}
-      <h2 className="text-xl font-bold mb-4">Customer Reviews</h2>
+      <h2 className="text-lg font-bold mb-4">Reviews</h2>
 
-      {reviews.length === 0 && (
-        <p className="text-gray-500 mb-4">No reviews yet</p>
-      )}
-
-      <div className="space-y-3">
-        {reviews.map((r) => (
-          <div key={r._id} className="border p-3 rounded">
-            <p className="font-semibold">{r.name}</p>
-            <p className="text-yellow-500">{"⭐".repeat(r.rating)}</p>
-            <p className="text-sm text-gray-600">{r.comment}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* ================= ADD REVIEW ================= */}
-      <div className="mt-8 border p-4 rounded">
-        <h3 className="font-semibold mb-3">Write a Review</h3>
-
+      {/* Review Form */}
+      <div className="border p-4 rounded mb-6">
         <input
-          name="name"
-          value={form.name}
-          onChange={handleChange}
           placeholder="Your name"
-          className="w-full border p-2 mb-2"
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          className="border p-2 w-full mb-2"
         />
 
         <select
-          name="rating"
           value={form.rating}
-          onChange={handleChange}
-          className="w-full border p-2 mb-2"
+          onChange={(e) => setForm({ ...form, rating: Number(e.target.value) })}
+          className="border p-2 w-full mb-2"
         >
-          {[5, 4, 3, 2, 1].map((n) => (
+          {[5,4,3,2,1].map((n) => (
             <option key={n} value={n}>
-              {n} Star
+              {n} Stars
             </option>
           ))}
         </select>
 
         <textarea
-          name="comment"
+          placeholder="Write review..."
           value={form.comment}
-          onChange={handleChange}
-          placeholder="Write your review..."
-          className="w-full border p-2 mb-2"
+          onChange={(e) => setForm({ ...form, comment: e.target.value })}
+          className="border p-2 w-full mb-2"
         />
 
         <button
-          onClick={handleSubmit}
-          disabled={loading}
-          className="bg-black text-white px-4 py-2"
+          onClick={submitReview}
+          className="bg-black text-white px-4 py-2 w-full"
         >
-          {loading ? "Submitting..." : "Submit Review"}
+          Submit Review
         </button>
+      </div>
+
+      {/* Reviews List */}
+      <div className="space-y-3">
+        {reviews.map((r) => (
+          <div key={r._id} className="border p-3 rounded">
+            <p className="font-bold">{r.name}</p>
+            <p>{"⭐".repeat(r.rating)}</p>
+            <p className="text-sm">{r.comment}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

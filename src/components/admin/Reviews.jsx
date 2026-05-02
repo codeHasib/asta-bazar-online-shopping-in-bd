@@ -2,16 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  ShieldCheck, 
-  Trash2, 
-  Star, 
-  MessageSquare, 
-  User, 
+import {
+  ShieldCheck,
+  Trash2,
+  Star,
+  MessageSquare,
+  User,
   Clock,
   CheckCircle2,
   ThumbsUp,
-  Inbox
+  Inbox,
 } from "lucide-react";
 
 export default function Reviews() {
@@ -22,7 +22,7 @@ export default function Reviews() {
   const fetchReviews = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch("/api/reviews/all", {cache: "no-store"});
+      const res = await fetch("/api/reviews?all=true", { cache: "no-store" });
       const data = await res.json();
       setReviews(data.reviews || []);
     } catch (err) {
@@ -37,17 +37,26 @@ export default function Reviews() {
   }, []);
 
   const approve = async (id) => {
-    const res = await fetch(`/api/reviews/${id}`, {cache: "no-store"}, { method: "PATCH" });
+    const res = await fetch(`/api/reviews/${id}`, {
+      method: "PATCH",
+      cache: "no-store",
+    });
+
     if (res.ok) fetchReviews();
   };
 
   const remove = async (id) => {
     if (!window.confirm("Permanently delete this customer feedback?")) return;
-    const res = await fetch(`/api/reviews/${id}`, {cache: "no-store"}, { method: "DELETE" });
+
+    const res = await fetch(`/api/reviews/${id}`, {
+      method: "DELETE",
+      cache: "no-store",
+    });
+
     if (res.ok) fetchReviews();
   };
 
-  const filteredReviews = reviews.filter(r => {
+  const filteredReviews = reviews.filter((r) => {
     if (filter === "all") return true;
     return r.status === filter;
   });
@@ -72,9 +81,9 @@ export default function Reviews() {
               key={tab}
               onClick={() => setFilter(tab)}
               className={`px-6 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${
-                filter === tab 
-                ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" 
-                : "text-slate-500 hover:text-slate-800"
+                filter === tab
+                  ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
+                  : "text-slate-500 hover:text-slate-800"
               }`}
             >
               {tab}
@@ -89,13 +98,17 @@ export default function Reviews() {
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center gap-2">
             <Inbox size={12} /> Pending Queue
           </p>
-          <p className="text-3xl font-bold tracking-tight">{reviews.filter(r => r.status === 'pending').length}</p>
+          <p className="text-3xl font-bold tracking-tight">
+            {reviews.filter((r) => r.status === "pending").length}
+          </p>
         </div>
         <div className="bg-white border border-slate-200 p-5 rounded-3xl shadow-sm">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center gap-2">
             <ThumbsUp size={12} /> Published
           </p>
-          <p className="text-3xl font-bold tracking-tight text-blue-600">{reviews.filter(r => r.status === 'approved').length}</p>
+          <p className="text-3xl font-bold tracking-tight text-blue-600">
+            {reviews.filter((r) => r.status === "approved").length}
+          </p>
         </div>
       </div>
 
@@ -119,10 +132,17 @@ export default function Reviews() {
 
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-3 mb-2">
-                    <h3 className="text-sm font-bold uppercase tracking-tight text-slate-800">{r.name}</h3>
+                    <h3 className="text-sm font-bold uppercase tracking-tight text-slate-800">
+                      {r.name}
+                    </h3>
                     <div className="flex items-center gap-1 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">
-                      <Star size={10} className="fill-amber-500 text-amber-500" />
-                      <span className="text-[10px] font-bold text-amber-700">{r.rating}/5</span>
+                      <Star
+                        size={10}
+                        className="fill-amber-500 text-amber-500"
+                      />
+                      <span className="text-[10px] font-bold text-amber-700">
+                        {r.rating}/5
+                      </span>
                     </div>
                     {r.status === "approved" && (
                       <span className="flex items-center gap-1 text-[9px] font-bold uppercase text-green-600 bg-green-50 px-2 py-1 rounded-md border border-green-100">
@@ -151,7 +171,9 @@ export default function Reviews() {
                       title="Approve Review"
                     >
                       <ShieldCheck size={18} />
-                      <span className="md:hidden text-[10px] font-bold uppercase tracking-widest">Approve</span>
+                      <span className="md:hidden text-[10px] font-bold uppercase tracking-widest">
+                        Approve
+                      </span>
                     </button>
                   )}
                   <button
@@ -160,16 +182,23 @@ export default function Reviews() {
                     title="Delete Review"
                   >
                     <Trash2 size={18} />
-                    <span className="md:hidden text-[10px] font-bold uppercase tracking-widest">Delete</span>
+                    <span className="md:hidden text-[10px] font-bold uppercase tracking-widest">
+                      Delete
+                    </span>
                   </button>
                 </div>
               </motion.div>
             ))
           ) : (
             <div className="py-24 text-center border-2 border-dashed border-slate-100 rounded-[3rem] bg-slate-50/50">
-              <MessageSquare size={40} className="mx-auto text-slate-200 mb-4" />
+              <MessageSquare
+                size={40}
+                className="mx-auto text-slate-200 mb-4"
+              />
               <p className="text-slate-400 font-bold uppercase text-[10px] tracking-widest">
-                {isLoading ? "Synchronizing reviews..." : "No items found in this filter"}
+                {isLoading
+                  ? "Synchronizing reviews..."
+                  : "No items found in this filter"}
               </p>
             </div>
           )}

@@ -16,7 +16,7 @@ export async function DELETE(req, context) {
     if (!deleted) {
       return NextResponse.json(
         { success: false, error: "Product not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -29,7 +29,7 @@ export async function DELETE(req, context) {
 
     return NextResponse.json(
       { success: false, error: error.message },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -79,7 +79,7 @@ export async function PUT(req, context) {
     if (!product) {
       return NextResponse.json(
         { success: false, error: "Product not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -104,7 +104,35 @@ export async function PUT(req, context) {
 
     return NextResponse.json(
       { success: false, error: error.message },
-      { status: 500 }
+      { status: 500 },
+    );
+  }
+}
+
+// GET BY ID
+export async function GET(req, { params }) {
+  try {
+    await connectDB();
+
+    const product = await Product.findById(params.id);
+
+    if (!product) {
+      return NextResponse.json(
+        { success: false, error: "Product not found" },
+        { status: 404 },
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      product,
+    });
+  } catch (error) {
+    console.error("PRODUCT BY ID ERROR:", error);
+
+    return NextResponse.json(
+      { success: false, error: error.message },
+      { status: 500 },
     );
   }
 }

@@ -3,16 +3,18 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useCartStore } from "@/store/cartStore";
+import { useRouter } from "next/navigation";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
   const addToCart = useCartStore((state) => state.addToCart);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProducts = async () => {
       const res = await fetch("/api/products");
       const data = await res.json();
-      console.log(data)
+      console.log(data);
       setProducts(data.products || []);
     };
 
@@ -29,18 +31,26 @@ export default function ProductsPage() {
             key={product._id}
             className="border rounded-xl p-4 shadow-sm"
           >
-            {/* IMAGE */}
-            <div className="relative w-full h-40 mb-3">
-              <Image
-                src={product.images?.[0] || "/placeholder.png"}
-                alt={product.title}
-                fill
-                className="object-cover rounded-lg"
-              />
-            </div>
+            {/* CLICKABLE AREA */}
+            <div
+              onClick={() => router.push(`/products/${product._id}`)}
+              className="cursor-pointer"
+            >
+              {/* IMAGE */}
+              <div className="relative w-full h-40 mb-3">
+                <Image
+                  src={product.images?.[0] || "/placeholder.png"}
+                  alt={product.title}
+                  fill
+                  className="object-cover rounded-lg"
+                />
+              </div>
 
-            {/* TITLE */}
-            <h2 className="font-semibold">{product.title}</h2>
+              {/* TITLE */}
+              <h2 className="font-semibold hover:underline">
+                {product.title}
+              </h2>
+            </div>
 
             {/* PRICE */}
             <p className="text-green-600 font-bold">
@@ -60,11 +70,7 @@ export default function ProductsPage() {
             <button
               disabled={!product.inStock}
               onClick={() =>
-                addToCart(
-                  product,
-                  1,
-                  product.sizes?.[0] || "default"
-                )
+                addToCart(product, 1, product.sizes?.[0] || "default")
               }
               className={`mt-3 w-full py-2 rounded-lg text-white ${
                 product.inStock
