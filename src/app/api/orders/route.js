@@ -53,22 +53,42 @@ export async function POST(req) {
 }
 
 // GET ALL ORDERS (ADMIN)
+// export async function GET() {
+//   try {
+//     await connectDB();
+
+//     const orders = await Order.find()
+//       .populate("items.productId")
+//       .sort({ createdAt: -1 });
+
+//     return NextResponse.json({
+//       success: true,
+//       orders,
+//     });
+//   } catch (error) {
+//     return NextResponse.json(
+//       { success: false, error: "Failed to fetch orders" },
+//       { status: 500 },
+//     );
+//   }
+// }
+
 export async function GET() {
   try {
     await connectDB();
 
-    const orders = await Order.find()
-      .populate("items.productId")
-      .sort({ createdAt: -1 });
+    const orders = await Order.find().sort({ createdAt: -1 });
 
     return NextResponse.json({
       success: true,
       orders,
     });
   } catch (error) {
+    console.error("ORDER GET ERROR:", error);
+
     return NextResponse.json(
-      { success: false, error: "Failed to fetch orders" },
-      { status: 500 },
+      { success: false, error: error.message },
+      { status: 500 }
     );
   }
 }
