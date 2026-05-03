@@ -12,9 +12,8 @@ export default function ProductsPage() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await fetch("/api/products");
+      const res = await fetch("/api/products", { cache: "no-store" });
       const data = await res.json();
-      console.log(data);
       setProducts(data.products || []);
     };
 
@@ -27,10 +26,7 @@ export default function ProductsPage() {
 
       <div className="grid md:grid-cols-3 gap-6">
         {products.map((product) => (
-          <div
-            key={product._id}
-            className="border rounded-xl p-4 shadow-sm"
-          >
+          <div key={product._id} className="border rounded-xl p-4 shadow-sm">
             {/* CLICKABLE AREA */}
             <div
               onClick={() => router.push(`/products/${product._id}`)}
@@ -47,15 +43,11 @@ export default function ProductsPage() {
               </div>
 
               {/* TITLE */}
-              <h2 className="font-semibold hover:underline">
-                {product.title}
-              </h2>
+              <h2 className="font-semibold hover:underline">{product.title}</h2>
             </div>
 
             {/* PRICE */}
-            <p className="text-green-600 font-bold">
-              ৳ {product.price}
-            </p>
+            <p className="text-green-600 font-bold">৳ {product.price}</p>
 
             {/* STOCK STATUS */}
             <p

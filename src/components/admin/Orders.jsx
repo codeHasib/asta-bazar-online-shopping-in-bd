@@ -29,15 +29,12 @@ export default function Orders() {
 
   const updateStatus = async (id, status) => {
     setUpdatingId(id);
-    await fetch(
-      `/api/orders/${id}`,
-      { cache: "no-store" },
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status }),
-      },
-    );
+    await fetch(`/api/orders/${id}`, {
+      cache: "no-store",
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    });
     await fetchOrders();
     setUpdatingId(null);
   };

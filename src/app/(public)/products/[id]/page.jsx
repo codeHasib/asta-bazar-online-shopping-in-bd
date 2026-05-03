@@ -17,7 +17,7 @@ export default function ProductPage() {
     const fetchProduct = async () => {
       try {
         // const res = await fetch(`/api/products/${id}`);
-        const res = await fetch(`/api/products/`);
+        const res = await fetch(`/api/products/`, { cache: "no-store" });
 
         if (!res.ok) {
           console.error("API ERROR:", await res.text());
