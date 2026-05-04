@@ -15,7 +15,6 @@ export default function ProductsPage() {
 
   const addToCart = useCartStore((state) => {
     state.addToCart;
-    redirect("/cart");
   });
   const router = useRouter();
 
@@ -186,9 +185,14 @@ export default function ProductsPage() {
 
                       <button
                         disabled={!product.inStock}
-                        onClick={() =>
-                          addToCart(product, 1, product.sizes?.[0] || "default")
-                        }
+                        onClick={() => {
+                          addToCart(
+                            product,
+                            1,
+                            product.sizes?.[0] || "default",
+                          );
+                          redirect("/cart");
+                        }}
                         className={`mt-4 w-full py-4 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 
                           ${
                             product.inStock
