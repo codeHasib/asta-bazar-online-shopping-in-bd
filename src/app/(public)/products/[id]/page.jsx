@@ -14,6 +14,8 @@ import {
   Plus,
   Minus,
   Send,
+  PhoneCall,
+  MessageCircle,
 } from "lucide-react";
 
 export default function ProductPage() {
@@ -155,6 +157,27 @@ export default function ProductPage() {
               >
                 <ShoppingBag size={18} /> Order Now
               </button>
+            </div>
+            <div className="flex flex-col sm:flex-row justify-between items-stretch gap-4 mb-4">
+              <a
+                href="tel:+8801973989270"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 px-6 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-colors shadow-xl active:scale-95"
+              >
+                <PhoneCall size={18} />
+                <span>Order With Direct call</span>
+              </a>
+
+              <a
+                href="https://wa.me/8801973989270"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 bg-green-500 hover:bg-green-600 text-white py-4 px-6 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-colors shadow-xl active:scale-95"
+              >
+                <MessageCircle size={18} />
+                <span>Order With Whatsapp</span>
+              </a>
             </div>
 
             <div className="grid grid-cols-3 gap-4 pt-8 border-t border-slate-100">

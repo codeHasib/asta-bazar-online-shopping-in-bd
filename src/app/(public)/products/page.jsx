@@ -13,9 +13,7 @@ export default function ProductsPage() {
   const [maxPrice, setMaxPrice] = useState(10000); // Default high range
   const [loading, setLoading] = useState(true);
 
-  const addToCart = useCartStore((state) => {
-    state.addToCart;
-  });
+  const addToCart = useCartStore((state) => state.addToCart);
   const router = useRouter();
 
   useEffect(() => {
