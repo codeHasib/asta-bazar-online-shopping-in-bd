@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import Image from "next/image";
 import { useCartStore } from "@/store/cartStore";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { ShoppingBag, Search, SlidersHorizontal, X } from "lucide-react";
 
 export default function ProductsPage() {
@@ -13,7 +13,10 @@ export default function ProductsPage() {
   const [maxPrice, setMaxPrice] = useState(10000); // Default high range
   const [loading, setLoading] = useState(true);
 
-  const addToCart = useCartStore((state) => state.addToCart);
+  const addToCart = useCartStore((state) => {
+    state.addToCart;
+    redirect("/cart");
+  });
   const router = useRouter();
 
   useEffect(() => {
@@ -37,14 +40,18 @@ export default function ProductsPage() {
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
       const matchesCategory =
-        selectedCategory === "All" || product.categoryId.name === selectedCategory;
+        selectedCategory === "All" ||
+        product.categoryId.name === selectedCategory;
       const matchesPrice = product.price <= maxPrice;
       return matchesSearch && matchesCategory && matchesPrice;
     });
   }, [products, searchQuery, selectedCategory, maxPrice]);
 
   // Get unique categories for the filter buttons
-  const categories = ["All", ...new Set(products.map((p) => p.categoryId.name))];
+  const categories = [
+    "All",
+    ...new Set(products.map((p) => p.categoryId.name)),
+  ];
 
   // Grouping the filtered results
   const groupedProducts = filteredProducts.reduce((acc, product) => {
@@ -190,7 +197,7 @@ export default function ProductsPage() {
                           }`}
                       >
                         <ShoppingBag size={14} />
-                        Add to Cart
+                        Order Now
                       </button>
                     </div>
                   </div>
