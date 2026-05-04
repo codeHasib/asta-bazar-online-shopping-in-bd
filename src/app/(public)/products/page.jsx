@@ -181,26 +181,47 @@ export default function ProductsPage() {
                         {product.category}
                       </p>
 
-                      <button
-                        disabled={!product.inStock}
-                        onClick={() => {
-                          addToCart(
-                            product,
-                            1,
-                            product.sizes?.[0] || "default",
-                          );
-                          redirect("/cart");
-                        }}
-                        className={`mt-4 w-full py-4 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 
+                      <div className="flex gap-5 justify-center">
+                        <button
+                          disabled={!product.inStock}
+                          onClick={() => {
+                            addToCart(
+                              product,
+                              1,
+                              product.sizes?.[0] || "default",
+                            );
+                            redirect("/cart");
+                          }}
+                          className={`flex-1 mt-4 py-4 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 
                           ${
                             product.inStock
                               ? "bg-slate-900 text-white hover:bg-blue-600 shadow-xl shadow-slate-200"
                               : "bg-slate-100 text-slate-400 cursor-not-allowed"
                           }`}
-                      >
-                        <ShoppingBag size={14} />
-                        Order Now
-                      </button>
+                        >
+                          <ShoppingBag size={14} />
+                          Order Now
+                        </button>
+                        <button
+                          disabled={!product.inStock}
+                          onClick={() => {
+                            addToCart(
+                              product,
+                              1,
+                              product.sizes?.[0] || "default",
+                            );
+                          }}
+                          className={`flex-1 mt-4 py-4 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 
+                          ${
+                            product.inStock
+                              ? "bg-blue-500 text-white hover:bg-blue-600 shadow-xl shadow-slate-200"
+                              : "bg-slate-100 text-slate-400 cursor-not-allowed"
+                          }`}
+                        >
+                          <ShoppingBag size={14} />
+                          ADD TO CART
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
