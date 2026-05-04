@@ -4,17 +4,16 @@ export const metadata = {
   title: "আস্থা বাজার - Asta Bazar | Best online marketing shop in Bangladesh",
   description:
     "আস্থা বাজার - সেরা পণ্যের বিশ্বস্ত অনলাইন শপ। Shop the best deals on electronics, fashion, and daily essentials at Asta Bazar Bangladesh.",
+  icons: {
+    icon: "/icon.png", // The standard one
+    apple: "/apple-icon.png", // Google often uses this for high-res previews
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-        {children}
-        </body>
+    <html lang="en" className={`h-full antialiased`}>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }
