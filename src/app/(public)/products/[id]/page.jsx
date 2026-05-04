@@ -128,56 +128,74 @@ export default function ProductPage() {
             <p className="text-3xl font-black text-blue-600 mb-6">
               ৳{product.price}
             </p>
-            <p className="text-slate-500 font-medium leading-relaxed mb-10 border-l-4 border-blue-600 pl-6 italic">
-              "{product.description}"
-            </p>
-
-            <div className="flex items-center gap-6 mb-10">
-              <div className="flex items-center bg-slate-100 rounded-2xl p-2 px-4">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="p-2 hover:text-blue-600"
-                >
-                  <Minus size={16} />
-                </button>
-                <span className="w-10 text-center font-black">{quantity}</span>
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="p-2 hover:text-blue-600"
-                >
-                  <Plus size={16} />
-                </button>
-              </div>
+            <div className="flex items-center bg-slate-100 rounded-2xl p-2 px-4 mb-4 w-35">
               <button
-                onClick={() => {
-                  addToCart(product, quantity);
-                  redirect("/cart");
-                }}
-                className="flex-1 bg-slate-900 text-white py-5 rounded-[1.5rem] font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-blue-600 transition-all shadow-xl"
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="p-2 hover:text-blue-600"
               >
-                <ShoppingBag size={18} /> Order Now
+                <Minus size={16} />
+              </button>
+              <span className="w-10 text-center font-black">{quantity}</span>
+              <button
+                onClick={() => setQuantity(quantity + 1)}
+                className="p-2 hover:text-blue-600"
+              >
+                <Plus size={16} />
               </button>
             </div>
-            <div className="flex sm:flex-row justify-between items-stretch gap-4 mb-4">
-              <a
-                href="tel:+8801973989270"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 px-6 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-colors shadow-xl active:scale-95 text-[12px]"
-              >
-                <PhoneCall size={18} />
-                <span>Call For order</span>
-              </a>
+            <div className="w-full space-y-3 mb-10">
+              {/* 2x2 Grid for Mobile, Stays consistent on Desktop */}
+              <div className="grid grid-cols-2 gap-3">
+                {/* ADD TO CART */}
+                <button
+                  onClick={() => addToCart(product, quantity)}
+                  className="bg-orange-500 text-white py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 hover:bg-blue-600 transition-all shadow-lg active:scale-95 text-[10px] sm:text-xs"
+                >
+                  <ShoppingBag size={16} className="shrink-0" />
+                  <span className="truncate">Add to Cart</span>
+                </button>
 
-              <a
-                href="https://wa.me/8801973989270"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 bg-green-500 hover:bg-green-600 text-white py-4 px-6 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-colors shadow-xl active:scale-95 text-[12px]"
-              >
-                <MessageCircle size={18} />
-                <span>Order on Whatsapp</span>
-              </a>
+                {/* ORDER NOW (With Shake Animation) */}
+                <button
+                  onClick={() => {
+                    addToCart(product, quantity);
+                    router.push("/cart");
+                  }}
+                  className="animate-shake bg-slate-900 text-white py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 hover:bg-blue-600 transition-all shadow-lg active:scale-95 text-[10px] sm:text-xs"
+                >
+                  <ShoppingBag size={16} className="shrink-0" />
+                  <span className="truncate">Order Now</span>
+                </button>
+
+                {/* CALL FOR ORDER */}
+                <a
+                  href="tel:+8801973989270"
+                  className="bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95 text-[10px] sm:text-xs"
+                >
+                  <PhoneCall size={16} className="shrink-0" />
+                  <span className="truncate">Call for Order</span>
+                </a>
+
+                {/* WHATSAPP ORDER */}
+                <a
+                  href="https://wa.me/8801973989270"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-green-500 hover:bg-green-600 text-white py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95 text-[10px] sm:text-xs"
+                >
+                  <MessageCircle size={16} className="shrink-0" />
+                  <span className="truncate">order on WhatsApp</span>
+                </a>
+              </div>
+            </div>
+
+            <div className="my-5">
+              <h2 className="text-3xl font-bold text-blue-600 mb-5 underline">
+                PRODUCT DETAILS
+              </h2>
+              <p className="text-black font-medium leading-relaxed mb-10 border-l-4 border-blue-600 pl-6">
+                &quot;{product.description}&quot;
+              </p>
             </div>
 
             <div className="grid grid-cols-3 gap-4 pt-8 border-t border-slate-100">
