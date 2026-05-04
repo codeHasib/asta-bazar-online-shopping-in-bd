@@ -56,7 +56,7 @@ export default function Hero() {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href="/shop"
+                href="/products"
                 className="group bg-blue-600 text-white px-10 py-4 rounded-full font-bold uppercase text-xs tracking-widest flex items-center gap-2 hover:bg-white hover:text-black transition-all shadow-xl shadow-blue-600/20 active:scale-95"
               >
                 Shop Now{" "}
@@ -66,10 +66,10 @@ export default function Hero() {
                 />
               </Link>
               <Link
-                href="/new-arrivals"
+                href="/categories"
                 className="px-10 py-4 rounded-full border border-white/30 text-white font-bold uppercase text-xs tracking-widest hover:bg-white/10 backdrop-blur-md transition-all active:scale-95"
               >
-                New Arrivals
+                Collections
               </Link>
             </div>
           </motion.div>

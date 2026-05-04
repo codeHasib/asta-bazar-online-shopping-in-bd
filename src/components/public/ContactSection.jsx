@@ -28,14 +28,16 @@ export default function ContactSection() {
 
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY).then(
       (result) => {
-        alert("আপনার বার্তাটি সফলভাবে পাঠানো হয়েছে! আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব।");
+        alert(
+          "আপনার বার্তাটি সফলভাবে পাঠানো হয়েছে! আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব।",
+        );
         formRef.current.reset();
         setLoading(false);
       },
       (error) => {
         alert("বার্তা পাঠানো সম্ভব হয়নি। অনুগ্রহ করে আবার চেষ্টা করুন।");
         setLoading(false);
-      }
+      },
     );
   };
 
@@ -47,28 +49,30 @@ export default function ContactSection() {
       <div className="max-w-7xl mx-auto">
         {/* --- HEADER --- */}
         <div className="mb-20 space-y-4">
-          <motion.span 
+          <motion.span
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             className="text-blue-600 font-bold text-[10px] uppercase tracking-[0.5em] block"
           >
             Connect With Us
           </motion.span>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-slate-900 leading-none"
           >
-            আপনার মতামত আমাদের <br /> <span className="text-blue-600 underline decoration-slate-100 underline-offset-8">অনুপ্রেরণা।</span>
+            আপনার মতামত আমাদের <br />{" "}
+            <span className="text-blue-600 underline decoration-slate-100 underline-offset-8">
+              অনুপ্রেরণা।
+            </span>
           </motion.h2>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           {/* --- LEFT: CONTACT INFO CARDS --- */}
           <div className="lg:col-span-5 space-y-6">
-            
             {/* WhatsApp Card */}
-            <motion.div 
+            <motion.div
               whileHover={{ y: -5 }}
               className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 group transition-all hover:bg-white hover:shadow-xl hover:shadow-blue-600/5"
             >
@@ -78,14 +82,19 @@ export default function ContactSection() {
               <h4 className="text-[11px] tracking-[0.3em] uppercase font-black mb-2 text-slate-900">
                 WhatsApp Support
               </h4>
-              <p className="text-sm text-slate-500 mb-4 font-medium">পণ্য এবং সাইজিং সম্পর্কে সরাসরি পরামর্শ পেতে মেসেজ দিন।</p>
-              <a href="tel:+880XXXXXXXXXX" className="text-lg font-bold text-slate-900 hover:text-blue-600 transition-colors">
-                +880 XXXX XXXXXX
+              <p className="text-sm text-slate-500 mb-4 font-medium">
+                পণ্য এবং সাইজিং সম্পর্কে সরাসরি পরামর্শ পেতে মেসেজ দিন।
+              </p>
+              <a
+                href="https://wa.me/+8801973989270?"
+                className="text-lg font-bold text-slate-900 hover:text-blue-600 transition-colors"
+              >
+                +8801973989270
               </a>
             </motion.div>
 
             {/* Email Card */}
-            <motion.div 
+            <motion.div
               whileHover={{ y: -5 }}
               className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 group transition-all hover:bg-white hover:shadow-xl hover:shadow-blue-600/5"
             >
@@ -95,21 +104,30 @@ export default function ContactSection() {
               <h4 className="text-[11px] tracking-[0.3em] uppercase font-black mb-2 text-slate-900">
                 Official Enquiries
               </h4>
-              <p className="text-sm text-slate-500 mb-4 font-medium">অর্ডার এবং কর্পোরেট গিফটিং সংক্রান্ত তথ্যের জন্য ইমেইল করুন।</p>
-              <a href="mailto:hello@astabazar.com" className="text-lg font-bold text-slate-900 hover:text-blue-600 transition-colors">
-                hello@astabazar.com
+              <p className="text-sm text-slate-500 mb-4 font-medium">
+                অর্ডার এবং কর্পোরেট গিফটিং সংক্রান্ত তথ্যের জন্য ইমেইল করুন।
+              </p>
+              <a
+                href="mailto:astabazarctg@gmail.com"
+                className="text-lg font-bold text-slate-900 hover:text-blue-600 transition-colors"
+              >
+                astabazarctg@gmail.com
               </a>
             </motion.div>
 
             {/* Service Status */}
             <div className="flex items-center gap-4 px-8 py-6 bg-blue-600 rounded-[2rem] text-white shadow-lg shadow-blue-600/20">
-               <div className="p-3 bg-white/10 rounded-xl">
-                 <ShieldCheck size={20} />
-               </div>
-               <div>
-                 <p className="text-[9px] font-bold uppercase tracking-widest opacity-80">Store Reliability</p>
-                 <p className="text-xs font-bold uppercase tracking-tighter">আস্থা ও বিশ্বাসের সাথে আপনার পাশে।</p>
-               </div>
+              <div className="p-3 bg-white/10 rounded-xl">
+                <ShieldCheck size={20} />
+              </div>
+              <div>
+                <p className="text-[9px] font-bold uppercase tracking-widest opacity-80">
+                  Store Reliability
+                </p>
+                <p className="text-xs font-bold uppercase tracking-tighter">
+                  আস্থা ও বিশ্বাসের সাথে আপনার পাশে।
+                </p>
+              </div>
             </div>
           </div>
 
@@ -118,7 +136,9 @@ export default function ContactSection() {
             <form ref={formRef} onSubmit={sendEmail} className="space-y-8">
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="flex flex-col gap-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">আপনার নাম</label>
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">
+                    আপনার নাম
+                  </label>
                   <input
                     type="text"
                     name="from_name"
@@ -129,7 +149,9 @@ export default function ContactSection() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">ইমেইল ঠিকানা</label>
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">
+                    ইমেইল ঠিকানা
+                  </label>
                   <input
                     type="email"
                     name="reply_to"
@@ -141,7 +163,9 @@ export default function ContactSection() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">বিষয় নির্বাচন করুন</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">
+                  বিষয় নির্বাচন করুন
+                </label>
                 <div className="relative">
                   <select
                     name="subject"
@@ -150,14 +174,21 @@ export default function ContactSection() {
                   >
                     <option value="General Inquiry">General Inquiry</option>
                     <option value="Order Status">Order Status</option>
-                    <option value="Business Inquiries">Business Inquiries</option>
+                    <option value="Business Inquiries">
+                      Business Inquiries
+                    </option>
                   </select>
-                  <ArrowRight size={16} className="absolute right-6 top-1/2 -translate-y-1/2 rotate-90 text-slate-300" />
+                  <ArrowRight
+                    size={16}
+                    className="absolute right-6 top-1/2 -translate-y-1/2 rotate-90 text-slate-300"
+                  />
                 </div>
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">বার্তা লিখুন</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">
+                  বার্তা লিখুন
+                </label>
                 <textarea
                   name="message"
                   rows={5}

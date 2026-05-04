@@ -189,7 +189,7 @@ export default function AdminProducts() {
               disabled={isLoading}
               className="w-full mt-8 bg-blue-600 text-white font-bold uppercase text-xs tracking-widest py-4 rounded-2xl hover:bg-blue-700 shadow-lg shadow-blue-600/20 transition-all disabled:opacity-50"
             >
-              {isLoading ? "PROCESING..." : "SAVE PRODUCT"}
+              {isLoading ? "PROCESSING..." : "SAVE PRODUCT"}
             </button>
           </div>
         </div>

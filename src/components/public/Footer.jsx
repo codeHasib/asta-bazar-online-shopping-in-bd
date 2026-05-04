@@ -29,15 +29,6 @@ const SocialIcons = [
       </svg>
     ),
   },
-  {
-    name: "YouTube",
-    href: "https://youtube.com",
-    svg: (
-      <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5">
-        <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-      </svg>
-    ),
-  },
 ];
 
 export default function Footer() {
@@ -45,15 +36,11 @@ export default function Footer() {
 
   const footerLinks = {
     shop: [
-      { name: "New Arrivals", href: "/new" },
-      { name: "Best Sellers", href: "/best-sellers" },
-      { name: "Featured Collections", href: "/collections" },
-      { name: "Discount Store", href: "/offers" },
+      { name: "Shop Now", href: "/products" },
+      { name: "Categories", href: "/categories" },
     ],
     support: [
-      { name: "Track Order", href: "/track" },
       { name: "Return Policy", href: "/returns" },
-      { name: "Shipping Info", href: "/shipping" },
       { name: "Contact Us", href: "/contact" },
     ],
     company: [
@@ -149,19 +136,19 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin size={18} className="text-blue-600 mt-0.5" />
                 <p className="text-sm font-medium text-slate-600">
-                  ঢাকা, বাংলাদেশ। আপনার শহরের সবচেয়ে বিশ্বস্ত অনলাইন শপ।
+                  রিয়াজউদ্দিন বাজার, চট্টগ্রাম, বাংলাদেশ।
                 </p>
               </div>
               <div className="flex items-center gap-3">
                 <Phone size={18} className="text-blue-600" />
                 <p className="text-sm font-bold text-slate-900">
-                  +৮৮০ ১৭০০-০০০০০০
+                  +8801973989270
                 </p>
               </div>
               <div className="flex items-center gap-3">
                 <Mail size={18} className="text-blue-600" />
                 <p className="text-sm font-bold text-slate-900">
-                  hello@astabazar.com
+                  astabazarctg@gmail.com
                 </p>
               </div>
             </div>
