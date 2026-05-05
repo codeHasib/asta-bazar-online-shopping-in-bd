@@ -45,6 +45,7 @@ export default function Navbar() {
               alt="Brand Image"
               width={60}
               height={60}
+              className="rounded-full"
             ></Image>
           </Link>
 
