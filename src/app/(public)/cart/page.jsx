@@ -141,7 +141,7 @@ export default function CheckoutPage() {
             {cart.map((item) => (
               <div
                 key={`${item._id}-${item.size}`}
-                className="bg-white p-6 rounded-[2rem] border border-slate-100 flex items-center gap-6 shadow-sm"
+                className="bg-white p-2 rounded-[2rem] border border-slate-100 flex items-center gap-6 shadow-sm"
               >
                 <div className="relative w-24 h-24 rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0">
                   <Image
@@ -204,8 +204,8 @@ export default function CheckoutPage() {
 
           {/* --- RIGHT: CHECKOUT FORM --- */}
           <div className="lg:col-span-5">
-            <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl sticky top-24">
-              <h2 className="text-xl font-black uppercase tracking-tighter mb-6 flex items-center gap-2">
+            <div className="bg-white p-3 rounded-[2.5rem] border border-slate-100 shadow-xl sticky top-24">
+              <h2 className="text-xl font-black uppercase mb-6 flex items-center gap-2">
                 <MapPin size={20} className="text-blue-600" /> Shipping Details
               </h2>
 
