@@ -130,7 +130,7 @@ export default function CheckoutPage() {
           >
             <ArrowLeft size={20} />
           </Link>
-          <h1 className="text-4xl font-black uppercase tracking-tighter">
+          <h1 className="text-4xl font-black uppercase">
             Your <span className="text-blue-600">Cart</span>
           </h1>
         </div>
