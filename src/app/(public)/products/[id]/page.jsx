@@ -41,6 +41,7 @@ export default function ProductPage() {
         const res = await fetch(`/api/products/`, { cache: "no-store" });
         const data = await res.json();
         const foundProduct = data.products.find((item) => item._id == id);
+        console.log(foundProduct);
         setProduct(foundProduct);
       } catch (err) {
         console.error("Fetch error:", err);
@@ -198,6 +199,15 @@ export default function ProductPage() {
                 <MessageCircle size={16} className="shrink-0" />
                 <span className="truncate">WhatsApp</span>
               </a>
+            </div>
+            <div className="my-5">
+              <h2 className="text-3xl font-bold text-blue-600 mb-5 underline">
+                PRODUCT DETAILS
+              </h2>
+
+              <p className="text-black font-medium leading-relaxed mb-10 border-l-4 border-blue-600 pl-6">
+                &quot;{product.description}&quot;
+              </p>
             </div>
           </div>
         </div>
