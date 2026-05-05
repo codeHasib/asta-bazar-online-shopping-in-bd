@@ -159,7 +159,7 @@ export default function ProductPage() {
                 <button
                   onClick={() => {
                     addToCart(product, quantity);
-                    router.push("/cart");
+                    redirect("/cart");
                   }}
                   className="animate-shake bg-slate-900 text-white py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 hover:bg-blue-600 transition-all shadow-lg active:scale-95 text-[10px] sm:text-xs"
                 >
