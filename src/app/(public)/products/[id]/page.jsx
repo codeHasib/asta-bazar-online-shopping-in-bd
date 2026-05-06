@@ -201,8 +201,9 @@ export default function ProductPage() {
               </a>
             </div>
             <div className="my-5">
-              <h2 className="text-3xl font-bold text-blue-600 mb-5 underline">
-                PRODUCT DETAILS
+              <h2 className="text-xl font-bold text-blue-600 mb-5 underline">
+                <span className="text-green-600">পণ্যের</span>{" "}
+                <span>বিবরণ</span>
               </h2>
 
               <p className="text-black font-medium leading-relaxed mb-10 border-l-4 border-blue-600 pl-6">
