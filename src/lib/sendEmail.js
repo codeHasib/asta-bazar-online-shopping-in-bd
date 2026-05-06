@@ -11,7 +11,7 @@ export const sendOrderEmail = async (order) => {
 
   const itemsText = order.items
     .map((item) => {
-      return `${item.title || "Unknown"} ${item.description} (Size: ${item.size || "-"} ) x${item.quantity || 1} - ৳${item.price || 0}`;
+      return `${item.title || "Unknown"} (Size: ${item.size || "-"} ) x${item.quantity || 1} - ৳${item.price || 0}`;
     })
     .join("\n");
 
