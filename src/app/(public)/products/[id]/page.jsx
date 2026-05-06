@@ -27,7 +27,6 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
 
-  // --- FIX: Form state now matches your backend (name, rating, comment) ---
   const [form, setForm] = useState({
     name: "",
     rating: 5,
@@ -41,7 +40,6 @@ export default function ProductPage() {
         const res = await fetch(`/api/products/`, { cache: "no-store" });
         const data = await res.json();
         const foundProduct = data.products.find((item) => item._id == id);
-        console.log(foundProduct);
         setProduct(foundProduct);
       } catch (err) {
         console.error("Fetch error:", err);
@@ -52,7 +50,6 @@ export default function ProductPage() {
     fetchProduct();
   }, [id]);
 
-  // --- FIX: submitReview function matching your successful logic ---
   const submitReview = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -70,11 +67,11 @@ export default function ProductPage() {
       const data = await res.json();
 
       if (data.success) {
-        alert("রিভিউটি সফলভাবে জমা দেওয়া হয়েছে এবং অনুমোদনের অপেক্ষায় আছে।");
+        alert("রিভিউটি সফলভাবে জমা দেওয়া হয়েছে এবং অনুমোদনের অপেক্ষায় আছে।");
         setForm({ name: "", rating: 5, comment: "" });
       }
     } catch (error) {
-      alert("দুঃখিত, রিভিউ জমা দেওয়া সম্ভব হয়নি।");
+      alert("দুঃখিত, রিভিউ জমা দেওয়া সম্ভব হয়নি।");
     } finally {
       setSubmitting(false);
     }
@@ -113,7 +110,9 @@ export default function ProductPage() {
                 <button
                   key={idx}
                   onClick={() => setActiveImage(idx)}
-                  className={`relative w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all ${activeImage === idx ? "border-blue-600" : "border-transparent opacity-60"}`}
+                  className={`relative w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all ${
+                    activeImage === idx ? "border-blue-600" : "border-transparent opacity-60"
+                  }`}
                 >
                   <Image src={img} fill className="object-cover" alt="thumb" />
                 </button>
@@ -122,100 +121,122 @@ export default function ProductPage() {
           </div>
 
           {/* Right: Info */}
-          {/* Out of Stock Message Overlay */}
-          {!product.inStock && (
-            <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-2xl animate-pulse">
-              <p className="text-red-700 font-black uppercase tracking-widest text-xs flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                </span>
-                This Product is Currently Out of Stock
-              </p>
-            </div>
-          )}
+          <div className="flex flex-col justify-center">
+            <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-slate-900 mb-2">
+              {product.title}
+            </h1>
+            <p className="text-3xl font-black text-blue-600 mb-6">
+              ৳{product.price}
+            </p>
 
-          <div className="w-full space-y-3 mb-10">
-            <div className="grid grid-cols-2 gap-3">
-              {/* ADD TO CART - Disabled State Applied */}
+            {/* Out of Stock Message Overlay */}
+            {!product.inStock && (
+              <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-2xl animate-pulse">
+                <p className="text-red-700 font-black uppercase tracking-widest text-xs flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                  </span>
+                  This Product is Currently Out of Stock
+                </p>
+              </div>
+            )}
+
+            {/* Quantity Selector */}
+            <div className="flex items-center bg-slate-100 rounded-2xl p-2 px-4 mb-6 w-fit">
               <button
-                onClick={() => addToCart(product, quantity)}
                 disabled={!product.inStock}
-                className={`py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 transition-all shadow-lg text-[10px] sm:text-xs
-        ${
-          !product.inStock
-            ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
-            : "bg-orange-500 text-white hover:bg-blue-600 active:scale-95"
-        }`}
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="p-2 hover:text-blue-600 disabled:opacity-30"
               >
-                <ShoppingBag size={16} className="shrink-0" />
-                <span className="truncate">Add to Cart</span>
+                <Minus size={16} />
               </button>
-
-              {/* ORDER NOW - Remove shake and change color if out of stock */}
+              <span className="w-10 text-center font-black">{quantity}</span>
               <button
-                onClick={() => {
-                  addToCart(product, quantity);
-                  redirect("/cart");
-                }}
+                onClick={() => setQuantity(quantity + 1)}
                 disabled={!product.inStock}
-                className={`py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 transition-all shadow-lg text-[10px] sm:text-xs
-        ${
-          !product.inStock
-            ? "bg-slate-300 text-slate-500 cursor-not-allowed shadow-none"
-            : "animate-shake bg-slate-900 text-white hover:bg-blue-600 active:scale-95"
-        }`}
+                className="p-2 hover:text-blue-600 disabled:opacity-30"
               >
-                <ShoppingBag size={16} className="shrink-0" />
-                <span className="truncate">Order Now</span>
+                <Plus size={16} />
               </button>
-
-              {/* CALL FOR ORDER - Stays active but turns neutral if you prefer to allow inquiries */}
-              <a
-                href={product.inStock ? "tel:+8801973989270" : "#"}
-                className={`py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 transition-all shadow-lg text-[10px] sm:text-xs
-        ${
-          !product.inStock
-            ? "bg-slate-100 text-slate-400 pointer-events-none"
-            : "bg-blue-600 hover:bg-blue-700 text-white active:scale-95"
-        }`}
-              >
-                <PhoneCall size={16} className="shrink-0" />
-                <span className="truncate">Call for Order</span>
-              </a>
-
-              {/* WHATSAPP ORDER */}
-              <a
-                href={product.inStock ? "https://wa.me/8801973989270" : "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 transition-all shadow-lg text-[10px] sm:text-xs
-        ${
-          !product.inStock
-            ? "bg-slate-100 text-slate-400 pointer-events-none"
-            : "bg-green-500 hover:bg-green-600 text-white active:scale-95"
-        }`}
-              >
-                <MessageCircle size={16} className="shrink-0" />
-                <span className="truncate">WhatsApp</span>
-              </a>
             </div>
+
+            {/* Action Buttons Grid */}
+            <div className="w-full space-y-3 mb-10">
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => addToCart(product, quantity)}
+                  disabled={!product.inStock}
+                  className={`py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 transition-all shadow-lg text-[10px] sm:text-xs
+                    ${!product.inStock 
+                      ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none" 
+                      : "bg-orange-500 text-white hover:bg-blue-600 active:scale-95"}`}
+                >
+                  <ShoppingBag size={16} className="shrink-0" />
+                  <span className="truncate">Add to Cart</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    addToCart(product, quantity);
+                    redirect("/cart");
+                  }}
+                  disabled={!product.inStock}
+                  className={`py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 transition-all shadow-lg text-[10px] sm:text-xs
+                    ${!product.inStock 
+                      ? "bg-slate-300 text-slate-500 cursor-not-allowed shadow-none" 
+                      : "animate-shake bg-slate-900 text-white hover:bg-blue-600 active:scale-95"}`}
+                >
+                  <ShoppingBag size={16} className="shrink-0" />
+                  <span className="truncate">Order Now</span>
+                </button>
+
+                <a
+                  href={product.inStock ? "tel:+8801973989270" : "#"}
+                  className={`py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 transition-all shadow-lg text-[10px] sm:text-xs
+                    ${!product.inStock 
+                      ? "bg-slate-100 text-slate-400 pointer-events-none shadow-none" 
+                      : "bg-blue-600 hover:bg-blue-700 text-white active:scale-95"}`}
+                >
+                  <PhoneCall size={16} className="shrink-0" />
+                  <span className="truncate">Call for Order</span>
+                </a>
+
+                <a
+                  href={product.inStock ? "https://wa.me/8801973989270" : "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 transition-all shadow-lg text-[10px] sm:text-xs
+                    ${!product.inStock 
+                      ? "bg-slate-100 text-slate-400 pointer-events-none shadow-none" 
+                      : "bg-green-500 hover:bg-green-600 text-white active:scale-95"}`}
+                >
+                  <MessageCircle size={16} className="shrink-0" />
+                  <span className="truncate">WhatsApp</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Description Logic */}
             <div className="my-5">
               <h2 className="text-xl font-bold text-blue-600 mb-5 underline">
-                <span className="text-green-600">পণ্যের</span>{" "}
-                <span>বিবরণ</span>
+                <span className="text-green-600">পণ্যের</span> <span>বিবরণ</span>
               </h2>
 
-              <p className="text-black font-medium leading-relaxed mb-10 border-l-4 border-blue-600 pl-6">
-                &quot;{product.description}&quot;
-              </p>
+              <ul className="space-y-3 border-l-4 border-blue-600 pl-6">
+                {product.description?.split('\n').filter(line => line.trim() !== '').map((line, index) => (
+                  <li key={index} className="text-black font-medium leading-relaxed flex items-start gap-2">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
+                    {line.replace(/^\d+\.\s*/, '')}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
 
         {/* BOTTOM SECTION: REVIEWS AREA */}
         <div className="grid lg:grid-cols-12 gap-16">
-          {/* Add Review Sidebar */}
           <div className="lg:col-span-4">
             <div className="sticky top-24">
               <h3 className="text-2xl font-black uppercase tracking-tighter mb-8">
@@ -286,7 +307,6 @@ export default function ProductPage() {
             </div>
           </div>
 
-          {/* Reviews List */}
           <div className="lg:col-span-8">
             <Reviews productId={id} />
           </div>
