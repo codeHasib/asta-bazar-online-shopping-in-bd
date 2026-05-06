@@ -141,7 +141,7 @@ export default function ProductsPage() {
                 <div className="h-[1px] bg-slate-100 flex-1"></div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
                 {items.map((product) => (
                   <div
                     key={product._id}
