@@ -83,7 +83,7 @@ export default function FeaturedCollections() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="group/card relative"
+                  className="group/card relative border border-gray-300 p-3 rounded-4xl"
                 >
                   {/* Image Container */}
                   <Link

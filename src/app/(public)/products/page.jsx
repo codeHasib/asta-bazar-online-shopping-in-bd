@@ -141,9 +141,10 @@ export default function ProductsPage() {
                 <div className="h-[1px] bg-slate-100 flex-1"></div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
                 {items.map((product) => (
-                  <div key={product._id} className="group">
+                  <div key={product._id} className="group border p-3 border-gray-300 rounded-4xl
+                  ">
                     <div
                       onClick={() => router.push(`/products/${product._id}`)}
                       className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] bg-slate-100 cursor-pointer border border-slate-50"
@@ -181,7 +182,7 @@ export default function ProductsPage() {
                         {product.category}
                       </p>
 
-                      <div className="flex gap-5 justify-center">
+                      <div className="flex md:gap-5 flex-col md:flex-row justify-center">
                         <button
                           disabled={!product.inStock}
                           onClick={() => {
@@ -192,7 +193,7 @@ export default function ProductsPage() {
                             );
                             redirect("/cart");
                           }}
-                          className={`flex-1 mt-4 py-4 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 
+                          className={`flex-1 mt-2 py-4 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 
                           ${
                             product.inStock
                               ? "bg-slate-900 text-white hover:bg-blue-600 shadow-xl shadow-slate-200"
@@ -211,7 +212,7 @@ export default function ProductsPage() {
                               product.sizes?.[0] || "default",
                             );
                           }}
-                          className={`flex-1 mt-4 py-4 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 
+                          className={`flex-1 mt-2 py-4 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 
                           ${
                             product.inStock
                               ? "bg-blue-500 text-white hover:bg-blue-600 shadow-xl shadow-slate-200"
