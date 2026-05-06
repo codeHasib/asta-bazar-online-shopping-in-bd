@@ -143,8 +143,11 @@ export default function ProductsPage() {
 
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
                 {items.map((product) => (
-                  <div key={product._id} className="group border p-3 border-gray-300 rounded-4xl
-                  ">
+                  <div
+                    key={product._id}
+                    className="group border p-3 border-gray-300 rounded-4xl
+                  "
+                  >
                     <div
                       onClick={() => router.push(`/products/${product._id}`)}
                       className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] bg-slate-100 cursor-pointer border border-slate-50"
@@ -165,7 +168,7 @@ export default function ProductsPage() {
                     </div>
 
                     <div className="mt-6 px-2">
-                      <div className="flex justify-between items-start mb-1">
+                      <div className="flex md:flex-row flex-col justify-between items-start mb-1">
                         <h3
                           className="font-bold text-slate-900 uppercase tracking-tight text-sm leading-tight hover:text-blue-600 cursor-pointer"
                           onClick={() =>
