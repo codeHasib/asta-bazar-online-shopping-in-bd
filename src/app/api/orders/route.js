@@ -12,7 +12,9 @@ export async function POST(req) {
 
     const body = await req.json();
 
-    const { customerName, phone, email, location, items, totalPrice } = body;
+    // 1. Added 'note' to the destructuring (comes from your checkout form)
+    const { customerName, phone, email, location, items, totalPrice, note } =
+      body;
 
     if (!items || items.length === 0) {
       return NextResponse.json(
@@ -26,12 +28,14 @@ export async function POST(req) {
       phone,
       email,
       location,
+      note: note || "", // 2. Added note (defaults to empty string if not provided)
       items: items.map((item) => ({
         productId: item._id || item.productId,
         title: item.title,
         price: item.price,
         quantity: item.quantity,
         size: item.size,
+        description: item.description, // 3. Added description capture
       })),
       totalPrice,
     });
@@ -88,7 +92,7 @@ export async function GET() {
 
     return NextResponse.json(
       { success: false, error: error.message },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

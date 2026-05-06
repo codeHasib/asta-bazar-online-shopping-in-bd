@@ -21,6 +21,12 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
 
+    // --- NEW: Optional Customer Note ---
+    note: {
+      type: String,
+      default: "", // Keeps it optional
+    },
+
     items: [
       {
         productId: {
@@ -28,6 +34,8 @@ const orderSchema = new mongoose.Schema(
           ref: "Product",
         },
         title: String,
+        // --- NEW: Product Description inside items ---
+        description: String,
         price: Number,
         quantity: Number,
         size: String,

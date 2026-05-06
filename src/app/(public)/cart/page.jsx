@@ -13,6 +13,7 @@ import {
   Truck,
   CheckCircle,
   ArrowLeft,
+  MessageSquare,
 } from "lucide-react";
 
 export default function CheckoutPage() {
@@ -27,7 +28,9 @@ export default function CheckoutPage() {
   const [form, setForm] = useState({
     name: "",
     phone: "",
+    email: "",
     address: "",
+    note: "", // Added note to state
   });
 
   useEffect(() => {
@@ -49,9 +52,15 @@ export default function CheckoutPage() {
     const orderPayload = {
       customerName: form.name,
       phone: form.phone,
+      email: form.email,
       location: form.address,
+      note: form.note, // Added note to payload
       deliveryArea: deliveryLocation,
-      items: cart,
+      // Mapping items to ensure description is included for the API
+      items: cart.map((item) => ({
+        ...item,
+        description: item.description || "",
+      })),
       totalPrice: finalTotal,
     };
 
@@ -68,7 +77,7 @@ export default function CheckoutPage() {
         clearCart();
       }
     } catch (err) {
-      alert("অর্ডার সম্পন্ন করা যায়নি। আবার চেষ্টা করুন।");
+      alert("অর্ডার সম্পন্ন করা যায়নি। আবার চেষ্টা করুন।");
     } finally {
       setSubmitting(false);
     }
@@ -85,10 +94,10 @@ export default function CheckoutPage() {
             <CheckCircle size={40} />
           </div>
           <h1 className="text-3xl font-black uppercase tracking-tighter">
-            অর্ডার সফল হয়েছে!
+            অর্ডার সফল হয়েছে!
           </h1>
           <p className="text-slate-500 font-medium">
-            আপনার অর্ডারটি আমাদের সিস্টেমে জমা হয়েছে। খুব শীঘ্রই আমাদের
+            আপনার অর্ডারটি আমাদের সিস্টেমে জমা হয়েছে। খুব শীঘ্রই আমাদের
             প্রতিনিধি আপনার সাথে যোগাযোগ করবেন।
           </p>
           <Link
@@ -130,8 +139,9 @@ export default function CheckoutPage() {
           >
             <ArrowLeft size={20} />
           </Link>
-          <h1 className="text-4xl font-black uppercase">
-            Your <span className="text-blue-600">Cart</span>
+          <h1 className="text-2xl font-black uppercase">
+            অর্ডার করুন{" "}
+            <span className="text-blue-600">ক্যাশ অন ডেলিভারিতে</span>
           </h1>
         </div>
 
@@ -205,29 +215,49 @@ export default function CheckoutPage() {
           {/* --- RIGHT: CHECKOUT FORM --- */}
           <div className="lg:col-span-5">
             <div className="bg-white p-3 rounded-[2.5rem] border border-slate-100 shadow-xl sticky top-24">
-              <h2 className="text-xl font-black uppercase mb-6 flex items-center gap-2">
-                <MapPin size={20} className="text-blue-600" /> Shipping Details
+              <h2 className="text-[14px] text-center font-black uppercase mb-6 flex items-center justify-center my-4 gap-2">
+                <MapPin size={20} className="text-blue-600" /> অর্ডার করতে নিচের
+                তথ্যগুলো দিন।
               </h2>
 
               <div className="space-y-4 mb-8">
                 <input
                   placeholder="আপনার নাম"
-                  className="w-full bg-slate-50 rounded-xl py-4 px-6 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-600/20"
+                  className="w-full bg-slate-50 rounded-xl py-4 px-6 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-600/20 border border-blue-700"
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                 />
                 <input
                   placeholder="ফোন নম্বর"
-                  className="w-full bg-slate-50 rounded-xl py-4 px-6 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-600/20"
+                  className="w-full bg-slate-50 rounded-xl py-4 px-6 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-600/20 border border-blue-700"
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                />
+                <input
+                  placeholder="ইমেইল এড্রেস"
+                  className="w-full bg-slate-50 rounded-xl py-4 px-6 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-600/20 border border-blue-700"
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
                 <textarea
                   placeholder="বিস্তারিত ঠিকানা (বাসা নং, রোড, এলাকা...)"
                   rows={3}
-                  className="w-full bg-slate-50 rounded-xl py-4 px-6 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-600/20 resize-none"
+                  className="w-full bg-slate-50 rounded-xl py-4 px-6 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-600/20 resize-none border border-blue-700"
                   onChange={(e) =>
                     setForm({ ...form, address: e.target.value })
                   }
                 />
+
+                {/* --- NEW: Optional Order Note --- */}
+                <div className="relative">
+                  <textarea
+                    placeholder="অর্ডার সম্পর্কিত কোনো নোট (ঐচ্ছিক)"
+                    rows={2}
+                    className="w-full bg-slate-50 rounded-xl py-4 px-6 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-600/20 resize-none border border-slate-200"
+                    onChange={(e) => setForm({ ...form, note: e.target.value })}
+                  />
+                  <MessageSquare
+                    size={14}
+                    className="absolute right-4 top-4 text-slate-300"
+                  />
+                </div>
               </div>
 
               <div className="mb-8">
@@ -239,13 +269,13 @@ export default function CheckoutPage() {
                     onClick={() => setDeliveryLocation("inside")}
                     className={`py-4 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${deliveryLocation === "inside" ? "bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-200" : "bg-white text-slate-500 border-slate-200"}`}
                   >
-                    Inside Dhaka (৳60)
+                    ঢাকার ভিতরে (৳60)
                   </button>
                   <button
                     onClick={() => setDeliveryLocation("outside")}
                     className={`py-4 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${deliveryLocation === "outside" ? "bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-200" : "bg-white text-slate-500 border-slate-200"}`}
                   >
-                    Outside Dhaka (৳120)
+                    ঢাকার বাহিরে (৳120)
                   </button>
                 </div>
               </div>

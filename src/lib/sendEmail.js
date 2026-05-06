@@ -11,27 +11,38 @@ export const sendOrderEmail = async (order) => {
 
   const itemsText = order.items
     .map((item) => {
-      return `${item.title || "Unknown"} (Size: ${item.size || "-"} ) x${item.quantity || 1} - ৳${item.price || 0}`;
+      // Added product description to the item breakdown
+      return `Product: ${item.title || "Unknown"}
+Size: ${item.size || "-"}
+Quantity: x${item.quantity || 1}
+Price: ৳${item.price || 0}
+Description: ${item.description || "N/A"}`;
     })
-    .join("\n");
+    .join("\n\n---\n\n");
 
   await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to: process.env.ADMIN_EMAIL,
-    subject: "New Order Received - Asta-Bazar",
+    subject: `New Order from ${order.customerName} - Asta-Bazar`,
     text: `
-New Order Received
+NEW ORDER RECEIVED
 
-Customer: ${order.customerName}
+CUSTOMER DETAILS:
+Name: ${order.customerName}
 Phone: ${order.phone}
-Email: ${order.email}
+Email: ${order.email || "N/A"}
 Location: ${order.location}
 
-Items:
-${itemsText}
+CUSTOMER NOTE:
+${order.note || "No specific instructions provided."}
 
-Total: ৳${order.totalPrice}
-Status: ${order.status}
+ORDERED ITEMS:
+--------------------------
+${itemsText}
+--------------------------
+
+TOTAL BILL: ৳${order.totalPrice}
+ORDER STATUS: ${order.status}
     `,
   });
 };
