@@ -83,8 +83,6 @@ export default function AdminProducts() {
       inStock: form.inStock,
     };
 
-    console.log(payload);
-
     const url = isUpdate
       ? `/api/products/${editingProduct._id}`
       : "/api/products";

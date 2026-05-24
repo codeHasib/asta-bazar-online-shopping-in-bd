@@ -49,9 +49,6 @@ export async function GET(req) {
     const productId = searchParams.get("productId");
     const all = searchParams.get("all");
 
-    console.log("ALL:", all); // 🔥 debug
-    console.log("PRODUCT:", productId);
-
     const query = {};
 
     if (!all) query.status = "approved";
