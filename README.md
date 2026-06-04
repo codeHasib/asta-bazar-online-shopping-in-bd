@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="readme.png" alt="Astabazar" width="100%">
+</p>
+
 # 🛒 AstaBazar — E-Commerce Platform
 
 🔗 **Live:** https://astabazar.com
