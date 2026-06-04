@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🛒 AstaBazar — E-Commerce Platform
 
-## Getting Started
+🔗 **Live:** https://astabazar.com
 
-First, run the development server:
+A production-ready e-commerce application built to handle real product workflows, customer orders, and automated business operations. Designed with performance, usability, and practical commerce needs in mind.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 Overview
+
+AstaBazar is a full-stack online shopping platform where users can browse products, manage carts, and place orders seamlessly.
+
+The system focuses on real-world functionality — including order tracking, delivery logic, and admin-side automation — making it more than just a UI demo.
+
+---
+
+## ⚡ Key Features
+
+* 🛍️ **Product Browsing & Filtering** — Explore items with responsive UI updates
+* 🛒 **Persistent Cart System** — Real-time cart updates with state synchronization
+* 📦 **Order Management System** — Structured order creation with detailed item tracking
+* 📩 **Automated Email Notifications** — Orders are instantly sent to admin via email
+* 🚚 **Dynamic Delivery Logic** — Shipping cost calculated based on location (Inside/Outside Dhaka)
+* ⚡ **Fast & Responsive UI** — Optimized for smooth performance across devices
+
+---
+
+## 🧠 Technical Highlights
+
+* Built with **Next.js App Router** for structured routing and rendering
+* Zustand used for fast and scalable client-side state management
+* MongoDB + Mongoose for flexible and reliable data storage
+* Order system designed to **preserve product data at purchase time**
+* Integrated Nodemailer for automated order handling
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend:** Next.js, React, Tailwind CSS
+**State Management:** Zustand
+**Backend:** Node.js (API routes)
+**Database:** MongoDB (Mongoose)
+**Other Tools:** Nodemailer
+
+---
+
+## 📂 Project Structure (Simplified)
+
+```id="ab12cd"
+src/
+ ├── app/            # Routes & layouts
+ ├── components/     # UI components
+ ├── store/          # State management (Zustand)
+ └── api/            # Backend logic
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## ⚙️ Local Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash id="xy98lm"
+git clone https://github.com/codeHasib/asta-bazar.git
+cd asta-bazar
+npm install
+```
 
-## Learn More
+Create `.env.local`:
 
-To learn more about Next.js, take a look at the following resources:
+```id="env45a"
+MONGODB_URI=your_mongodb_uri
+EMAIL_USER=your_email
+EMAIL_PASS=your_password
+ADMIN_EMAIL=admin_receiver_email
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run locally:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash id="run77q"
+npm run dev
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🌍 Production Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* Deployed on **Vercel** with optimized performance
+* Designed for real-world usage with dynamic order handling
+* Focused on usability, reliability, and business logic
+
+---
+
+## 📌 Note
+
+This is a real-world project built to simulate and handle actual e-commerce workflows, including order processing and operational automation.
