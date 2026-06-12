@@ -34,37 +34,6 @@ export async function DELETE(req, context) {
   }
 }
 
-// UPDATE PRODUCT
-// export async function PUT(req, { params }) {
-//   try {
-//     await connectDB();
-
-//     const { id } = params; // ✅ FIXED (no await)
-
-//     const body = await req.json();
-
-//     const updated = await Product.findByIdAndUpdate(
-//       id,
-//       {
-//         ...body, // ✅ SAFE + SIMPLE (don’t overcomplicate)
-//       },
-//       { new: true }
-//     );
-
-//     return NextResponse.json({
-//       success: true,
-//       product: updated,
-//     });
-//   } catch (error) {
-//     console.error("UPDATE ERROR:", error);
-
-//     return NextResponse.json(
-//       { success: false, error: error.message },
-//       { status: 500 }
-//     );
-//   }
-// }
-
 export async function PUT(req, context) {
   try {
     await connectDB();
